@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="4DCE22C1..STUDENT.HELPER" Publisher="CN=DB54F53A-3B64-4BBD-AC7F-C994B64E0081" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>学生助手.STUDENT.HELPER</DisplayName>
+    <PublisherDisplayName>Andrew Shaw</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="学生助手.STUDENT.HELPER.App">
+      <VisualElements DisplayName="学生助手.STUDENT.HELPER" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="学生助手.STUDENT.HELPER|这是一个简单的Windows8应用，方便管理学生的学习计划安排！" ForegroundText="dark" BackgroundColor="#D8ECF1">
+        <DefaultTile ShowName="allLogos" WideLogo="Assets\WideLogo.png" />
+        <SplashScreen Image="Assets\SplashScreen.png" />
+      </VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
