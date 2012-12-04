@@ -40,5 +40,10 @@ namespace 学生助手.STUDENT.HELPER
             var groupId = ((SampleDataGroup)e.ClickedItem).UniqueId;
             this.Frame.Navigate(typeof(SplitPage), groupId);
         }
+
+        private void AppBarEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(UpdateDataPage));
+        }
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<messages id="1">
+		<title>多媒体技术基础</title>
+		<subtitle>教学实验室3层</subtitle>
+		<_description>课程的简单描述与规划</_description>
+		<teacher>
+			Y.Daniel Liang
+		</teacher>
+		<textbook>多媒体技术基础(第3版)</textbook>
+		<time>
+			<start>7:00</start>
+			<end>9:00</end>
+		</time>
+	</messages>
+</root>

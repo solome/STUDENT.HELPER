@@ -23,7 +23,7 @@ public class AppSettingsPane
     {
         var privateCommand = new SettingsCommand("Privacy",
                                                  "隐私声明",
-                                                 delegate { Launcher.LaunchUriAsync(new Uri("http://www.csdn.net/company/privacy.html", UriKind.RelativeOrAbsolute)); });
+                                                 delegate { Launcher.LaunchUriAsync(new Uri("http://blog.iliyang.cn/", UriKind.RelativeOrAbsolute)); });
 
         args.Request.ApplicationCommands.Add(privateCommand);
     }

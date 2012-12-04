@@ -12,6 +12,13 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using System.Collections.Specialized;
 
+using Windows.Storage;
+
+using System.Collections;
+using System.IO;
+using System.Xml;
+
+
 namespace 学生助手.STUDENT.HELPER.Data
 {
     [Windows.Foundation.Metadata.WebHostHidden]
@@ -19,7 +26,7 @@ namespace 学生助手.STUDENT.HELPER.Data
     {
         private static Uri _baseUri = new Uri("ms-appx:///");
 
-        public SampleDataCommon(String uniqueId, String title, String subtitle, String imagePath, String description, 
+        public SampleDataCommon(String uniqueId, String title, String subtitle, String imagePath, String description,
             String teacherName, String textBook, DateTime start = new DateTime(), DateTime end = new DateTime())
         {
             this._uniqueId = uniqueId;
@@ -115,10 +122,10 @@ namespace 学生助手.STUDENT.HELPER.Data
             get
             {
                 return String.Format("|{0}:{1}-{2}:{3}",
-                    _start.Hour,_start.Second,_end.Hour,_end.Second);
+                    _start.Hour, _start.Second, _end.Hour, _end.Second);
             }
         }
-        
+
         public override string ToString()
         {
             return this.Title;
@@ -127,9 +134,9 @@ namespace 学生助手.STUDENT.HELPER.Data
 
     public class SampleDataItem : SampleDataCommon
     {
-        public SampleDataItem(String uniqueId, String title, String subtitle, String imagePath, String description, String content, SampleDataGroup group, 
+        public SampleDataItem(String uniqueId, String title, String subtitle, String imagePath, String description, String content, SampleDataGroup group,
             String teacherName, String textBook, DateTime start = new DateTime(), DateTime end = new DateTime())
-            : base(uniqueId, title, subtitle, imagePath, description,teacherName,textBook,start,end)
+            : base(uniqueId, title, subtitle, imagePath, description, teacherName, textBook, start, end)
         {
             this._content = content;
             this._group = group;
@@ -152,9 +159,9 @@ namespace 学生助手.STUDENT.HELPER.Data
 
     public class SampleDataGroup : SampleDataCommon
     {
-        public SampleDataGroup(String uniqueId, String title, String subtitle, String imagePath, String description, 
+        public SampleDataGroup(String uniqueId, String title, String subtitle, String imagePath, String description,
             String teacherName, String textBook, DateTime start = new DateTime(), DateTime end = new DateTime())
-            : base(uniqueId, title, subtitle, imagePath, description,teacherName,textBook,start,end)
+            : base(uniqueId, title, subtitle, imagePath, description, teacherName, textBook, start, end)
         {
             Items.CollectionChanged += ItemsCollectionChanged;
         }
@@ -166,7 +173,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewStartingIndex < 12)
                     {
-                        TopItems.Insert(e.NewStartingIndex,Items[e.NewStartingIndex]);
+                        TopItems.Insert(e.NewStartingIndex, Items[e.NewStartingIndex]);
                         if (TopItems.Count > 12)
                         {
                             TopItems.RemoveAt(12);
@@ -230,7 +237,7 @@ namespace 学生助手.STUDENT.HELPER.Data
         /// </summary>
         public ObservableCollection<SampleDataItem> TopItems
         {
-            get {return this._topItem; }
+            get { return this._topItem; }
         }
     }
 
@@ -247,7 +254,7 @@ namespace 学生助手.STUDENT.HELPER.Data
         public static IEnumerable<SampleDataGroup> GetGroups(string uniqueId)
         {
             if (!uniqueId.Equals("AllGroups")) throw new ArgumentException("Only 'AllGroups' is supported as a collection of groups");
-            
+
             return _sampleDataSource.AllGroups;
         }
 
@@ -275,19 +282,19 @@ namespace 学生助手.STUDENT.HELPER.Data
                         "成功的法则极为简单，但简单并不代表容易。",
                         "做对的事情比把事情做对重要",
                         "苦想没盼头，苦干有奔头。",
-                        "自己打败自己的远远多于比别人打败的。", 
-                        "忍耐力较诸脑力，尤胜一筹。","环境不会改变，解决之道在于改变自己。");
+                        "自己打败自己的远远多于比别人打败的。",
+                        "忍耐力较诸脑力，尤胜一筹。", "环境不会改变，解决之道在于改变自己。");
             Random random = new Random();
 
             var group1 = new SampleDataGroup("1",
                     "星期日",//星期
                     "努力多一点，明天好一点",//励志名言
-                    "Assets/" + random.Next(0,30) + ".png",//背景图片
+                    "Assets/" + random.Next(0, 30) + ".png",//背景图片
                     "当一个小小的心念变成成为行为时，便能成了习惯；从而形成性格，而性格就决定你一生的成败。", "失的猛", "ASP.NET网页设计");
             group1.Items.Add(new SampleDataItem("Group-1-Item-1",
                     "深入浅出WPF",
                     "北校区9#424",
-                    "Assets/" + random.Next(0,30) + ".png",
+                    "Assets/" + random.Next(0, 30) + ".png",
                     "好好研究WPF技术，打好WPF技术会对学习Windows8和Windows phone开发提供方便。",
                     ITEM_CONTENT,
                     group1,
@@ -330,7 +337,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "Assets/" + random.Next(0, 30) + ".png",
                     "投资知识是明智的，投资网络中的知识就更加明智。没有天生的信心，只有不断培养的信心。",
                     ITEM_CONTENT,
-                    group2,"失的猛","ASP.NET网页设计"));
+                    group2, "失的猛", "ASP.NET网页设计"));
             group2.Items.Add(new SampleDataItem("Group-2-Item-1",
                    "数据挖掘",
                    "南区10#712",
@@ -361,7 +368,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                    group2, "失的猛", "ASP.NET网页设计"));
             group2.Items.Add(new SampleDataItem("Group-2-Item-1",
                   "数据挖掘",
-                   "南区10#712", 
+                   "南区10#712",
                   "Assets/" + random.Next(0, 30) + ".png",
                    "为明天做准备的最好方法就是集中你所有智慧，所有的热忱，把今天的工作做得尽善尽美，这就是你能应付未来的唯一方法。",
                    ITEM_CONTENT,
@@ -373,7 +380,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "执着不惜",
                     "Assets/" + random.Next(0, 30) + ".png",
                     "人性最可怜的就是：我们总是梦想着天边的一座奇妙的玫瑰园，而不去欣赏今天就开在我们窗口的玫瑰。",
-                    "失的猛","ASP.NET网页设计");
+                    "失的猛", "ASP.NET网页设计");
             group3.Items.Add(new SampleDataItem("Group-3-Item-1",
                   "数据挖掘",
                    "南区10#712",
@@ -381,7 +388,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "这世上的一切都借希望而完成，农夫不会剥下一粒玉米，如果他不曾希望它长成种粒；单身汉不会娶妻，如果他不曾希望有孩子；商人也不会去工作，如果他不曾希望因此而有收益。",
                     ITEM_CONTENT,
                     group3,
-                    "失的猛","ASP.NET网页设计"));
+                    "失的猛", "ASP.NET网页设计"));
             group3.Items.Add(new SampleDataItem("Group-3-Item-1",
                     "数据挖掘",
                    "南区10#712",
@@ -414,7 +421,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                     ITEM_CONTENT,
                     group3,
                     "失的猛", "ASP.NET网页设计"));
-             
+
             this.AllGroups.Add(group3);
 
             var group4 = new SampleDataGroup("4",
@@ -422,8 +429,8 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "智者一切求自己",
                     "Assets/" + random.Next(0, 30) + ".png",
                     "没有什么事情有象热忱这般具有传染性，它能感动顽石，它是真诚的精髓。一个人几乎可以在任何他怀有无限热忱的事情上成功。",
-                    "失的猛","ASP.NET网页设计");
-             
+                    "失的猛", "ASP.NET网页设计");
+
             group4.Items.Add(new SampleDataItem("Group-4-Item-6",
                   "数据挖掘",
                    "南区10#712",
@@ -431,7 +438,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "挫折时，要像大树一样，被砍了，还能再长；也要像杂草一样，虽让人践踏，但还能勇敢地活下去。",
                     ITEM_CONTENT,
                     group4,
-                    "失的猛","ASP.NET网页设计"));
+                    "失的猛", "ASP.NET网页设计"));
             group4.Items.Add(new SampleDataItem("Group-4-Item-6",
                   "数据挖掘",
                    "南区10#712",
@@ -471,14 +478,14 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "愚者一切求他人",
                     "Assets/" + random.Next(0, 30) + ".png",
                     "成功呈概率分布，关键是你能不能坚持到成功开始呈现的那一刻。",
-                    "失的猛","ASP.NET网页设计");
+                    "失的猛", "ASP.NET网页设计");
             group5.Items.Add(new SampleDataItem("Group-5-Item-1",
                     "网页设计",
                     "北区 12#123",
                     "Assets/" + random.Next(0, 30) + ".png",
                     "你可以这样理解impossible（不可能）——I'mpossible（我是可能的）。　",
                     ITEM_CONTENT,
-                    group5,"失的猛","ASP.NET网页设计"));
+                    group5, "失的猛", "ASP.NET网页设计"));
             group5.Items.Add(new SampleDataItem("Group-5-Item-1",
                   "网页设计",
                     "北区 12#123",
@@ -507,7 +514,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                    "环境永远不会十全十美，消极的人受环境控制，积极的人却控制环境。",
                    ITEM_CONTENT,
                    group5, "失的猛", "ASP.NET网页设计"));
-             
+
             this.AllGroups.Add(group5);
 
             var group6 = new SampleDataGroup("6",
@@ -515,14 +522,14 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "放弃是魔鬼的举动",
                     "Assets/" + random.Next(0, 30) + ".png",
                     "环境永远不会十全十美，消极的人受环境控制，积极的人却控制环境。",
-                    "失的猛","ASP.NET网页设计");
+                    "失的猛", "ASP.NET网页设计");
             group6.Items.Add(new SampleDataItem("Group-6-Item-1",
                     "Java程序设计语言",
                     "南区|12#324",
                     "Assets/" + random.Next(0, 30) + ".png",
                     "拿望远镜看别人，拿放大镜看自己。",
                     ITEM_CONTENT,
-                    group6,"失的猛","ASP.NET网页设计"));
+                    group6, "失的猛", "ASP.NET网页设计"));
             group6.Items.Add(new SampleDataItem("Group-6-Item-1",
                    "Java程序设计语言",
                     "南区|12#324",
@@ -551,14 +558,14 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "这个世界并不是掌握在那些嘲笑者的手中，而恰恰掌握在能够经受得住嘲笑与批评忍不断往前走的人手中。",
                     ITEM_CONTENT,
                     group6, "失的猛", "ASP.NET网页设计"));
-             
+
             this.AllGroups.Add(group6);
             var group7 = new SampleDataGroup("7",
                     "星期六",
                     "永不言弃",
                     "Assets/" + random.Next(0, 30) + ".png",
                     "投资知识是明智的，投资网络中的知识就更加明智。没有天生的信心，只有不断培养的信心。",
-                    "失的猛","ASP.NET网页设计");
+                    "失的猛", "ASP.NET网页设计");
             group7.Items.Add(new SampleDataItem("Group-7-Item-1",
                     "数据结构与算法",
                     "南校区|10#467",
@@ -566,7 +573,7 @@ namespace 学生助手.STUDENT.HELPER.Data
                     "忍别人所不能忍的痛，吃别人所别人所不能吃的苦，是为了收获得不到的收获。",
                     ITEM_CONTENT,
                     group7,
-                    "失的猛","ASP.NET网页设计"));
+                    "失的猛", "ASP.NET网页设计"));
             group7.Items.Add(new SampleDataItem("Group-7-Item-1",
                    "数据结构与算法",
                    "南校区|10#467",
@@ -592,6 +599,22 @@ namespace 学生助手.STUDENT.HELPER.Data
                    group7,
                    "失的猛", "ASP.NET网页设计"));
             this.AllGroups.Add(group7);
+   
+            var group_for_a_test = new SampleDataGroup("10",
+                 "测试项",//星期
+                    "努力多一点，明天好一点",//励志名言
+                    "Assets/" + random.Next(0, 30) + ".png",//背景图片
+                    "当一个小小的心念变成成为行为时，便能成了习惯；从而形成性格，而性格就决定你一生的成败。", "失的猛", "ASP.NET网页设计");
+            group_for_a_test.Items.Add(new SampleDataItem("Group-8-Item-1", "C#入门经典", "10&560",
+                "Assets/" + random.Next(0, 30) + ".png",
+                "Just for a test",
+                "测试效果：此部分为课程的简单描述",
+                group_for_a_test,
+                "小白菜",
+                "C#入门经典 2012年版"));
+
+            this.AllGroups.Add(group_for_a_test);
+
         }
     }
 }

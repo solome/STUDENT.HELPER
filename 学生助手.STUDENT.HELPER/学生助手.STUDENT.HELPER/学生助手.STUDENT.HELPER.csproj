@@ -118,13 +118,20 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplitPage.xaml.cs" />
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="UpdateDataPage.xaml.cs">
+      <DependentUpon>UpdateDataPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="packages.config" />
     <None Include="学生助手.STUDENT.HELPER_StoreKey.pfx" />
     <None Include="学生助手.STUDENT.HELPER_TemporaryKey.pfx" />
   </ItemGroup>
@@ -164,6 +171,7 @@
     <Content Include="Assets\background.jpg" />
     <Content Include="Assets\backgroundd.jpg" />
     <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\data.xml" />
     <Content Include="Assets\LightGray.png" />
     <Content Include="Assets\Log1o.png" />
     <Content Include="Assets\Logo.png" />
@@ -200,6 +208,10 @@
     <Page Include="SplitPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UpdateDataPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">

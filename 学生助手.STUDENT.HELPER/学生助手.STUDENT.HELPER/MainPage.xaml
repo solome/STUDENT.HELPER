@@ -38,13 +38,32 @@
             ItemClick="ItemView_ItemClick"/>
 
 
-        <Grid>
+        <Grid Margin="10,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="学生助手|STUDENT.HELPER" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" FontFamily="SketchFlow Print" FontWeight="Bold" Foreground="#DEC0BFE2" Margin="62,0,30,40"/>
         </Grid>
     </Grid>
+
+    <Page.BottomAppBar>
+        <AppBar>
+            <Grid Background="Firebrick" HorizontalAlignment="Left" Width="1346">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="425*">
+                    </ColumnDefinition>
+                    <ColumnDefinition Width="248*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left">
+                    <Button x:Name="AppBarSearchButton" Style="{StaticResource SearchAppBarButtonStyle}" AutomationProperties.Name="搜索"/>
+                    <Button x:Name="AppBarEditButton" Style="{StaticResource EditAppBarButtonStyle}" Click="AppBarEditButton_Click" AutomationProperties.Name="编辑"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <Button x:Name="AppBarHomeButton" Style="{StaticResource HelpAppBarButtonStyle}" />
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+    
 </common:LayoutAwarePage>
