@@ -17,15 +17,13 @@
         <CollectionViewSource
             x:Name="itemsViewSource"
             Source="{Binding Items}"
-            d:Source="{Binding AllGroups[0].Items, Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"/>
+            d:Source="{Binding AllGroups[0].Items, Source=MainPage.solomedata}"/>
     </Page.Resources>
     <Grid
+        x:Name="SplitPage_Main_Grid"
         Style="{StaticResource LayoutRootStyle}"
         DataContext="{Binding Group}"
-        d:DataContext="{Binding AllGroups[0], Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}">
-        <Grid.Background>
-            <ImageBrush ImageSource="Assets/background.jpg" Stretch="UniformToFill"/>
-        </Grid.Background>
+        d:DataContext="{Binding AllGroups[0], Source=MainPage.solomedata}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
@@ -47,7 +45,7 @@
                 Click="GoBack"
                 IsEnabled="{Binding DefaultViewModel.CanGoBack, ElementName=pageRoot}"
                 Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}" Foreground="#DEEC2060" FontFamily="SketchFlow Print" FontWeight="Bold" FontSize="48"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}" Foreground="#DEEC2060" FontFamily="SketchFlow Print,Segoe Print" FontWeight="Bold" FontSize="48" Margin="0,0,8,40"/>
         </Grid>
 
         <!-- Vertical scrolling item list -->
@@ -68,14 +66,13 @@
         <ScrollViewer
             x:Name="itemDetail"
             AutomationProperties.AutomationId="ItemDetailScrollViewer"
-            Grid.Column="1"
             Grid.RowSpan="2"
-            Padding="70,0,120,0"
+            Padding="70,0,0,0"
             DataContext="{Binding SelectedItem, ElementName=itemListView}"
-            d:DataContext="{Binding AllGroups[0].Items[0], Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"
-            Style="{StaticResource VerticalScrollViewerStyle}">
+            d:DataContext="{Binding AllGroups[0].Items[0], Source=MainPage.solomedata}"
+            Style="{StaticResource VerticalScrollViewerStyle}" Grid.ColumnSpan="2" Margin="600,0,0,0">
 
-            <Grid x:Name="itemDetailGrid" Margin="0,60,0,50">
+            <Grid x:Name="itemDetailGrid" Width="666" Height="744">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -90,21 +87,21 @@
                 <Canvas x:Name="itemDetailTitlePanel" Grid.Row="1" Grid.Column="1">
                     <TextBlock x:Name="itemTitle" Text="{Binding Title}" FontSize="36" FontWeight="Bold" Canvas.Top="10" Height="47" Foreground="#FF97A1CF"  />
                     <TextBlock x:Name="itemSubtitle" Text="{Binding Subtitle}" Foreground="#FF97CFE4" FontSize="28" FontWeight="Bold" Height="26" Canvas.Top="67" />
-                    <TextBlock x:Name="itemStart" Text="{Binding Time}" Foreground="#FFF1F1F5" FontWeight="Bold" FontSize="28" Height="31" Canvas.Top="67" Canvas.Left="222" />
-                    <TextBlock x:Name="itemTextBook" Text="{Binding TextBook}" Canvas.Left="10" Canvas.Top="124" FontSize="38" Foreground="#FFD5D9EC" />
+                    <TextBlock x:Name="itemStart" Text="{Binding Time}" Foreground="#FFEA2121" FontSize="28" Height="43" Canvas.Top="67" Canvas.Left="170" Width="238" FontFamily="Microsoft YaHei UI" FontWeight="Bold" />
+                    <TextBlock x:Name="itemTextBook" Text="{Binding TextBook}" Canvas.Left="10" Canvas.Top="124" FontSize="38" Foreground="#FFD5D9EC" FontWeight="Bold" />
                 </Canvas>
                 <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                     <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                        <TextBlock Text="授课教师：" FontSize="28" />
+                        <TextBlock Text="授课教师：" FontSize="28" FontWeight="Bold" Foreground="#FF3EBEEE" />
                         <TextBlock Text="{Binding TeacherName}" FontSize="28" FontWeight="Bold" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                        <TextBlock Text="选用教材：" FontSize="28" />
+                        <TextBlock Text="选用教材：" FontSize="28" FontWeight="Bold" Foreground="#FF2CB945" />
                         <TextBlock Text="{Binding TextBook}" FontSize="28" FontWeight="Bold" />
                     </StackPanel>
-                    <StackPanel Margin="0,20,0,0">
-                    <TextBlock Text="课程说明与规划" FontSize="28" FontWeight="Bold" Foreground="#FFB7CEF7" />
-                        <TextBlock Margin="0,10,0,0" Text="{Binding Content}" FontSize="28" FontWeight="Bold" FontFamily="华文行楷" Foreground="#DEA6A5AE"/>
+                    <StackPanel Margin="0,0,0,0">
+                        <TextBlock Text="课程说明与规划" FontSize="32" FontWeight="Bold" Foreground="#FF4381F0" />
+                        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Text="{Binding Content}" FontSize="28" FontWeight="Bold" FontFamily="Global User Interface" Foreground="#DE71B7E8"  AcceptsReturn="True"  Height="435" Width="638" Background="{x:Null}" IsReadOnly="True" BorderThickness="0,1,0,0" BorderBrush="#FFF7F700" />
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -274,4 +271,25 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
+
+    <Page.BottomAppBar>
+        <AppBar Background="#FF2051A6" AllowDrop="True">
+            <Grid HorizontalAlignment="Left" Width="1346">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="425*">
+                    </ColumnDefinition>
+                    <ColumnDefinition Width="248*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left">
+                    <Button x:Name="AppBarHomeButton" Style="{StaticResource HomeAppBarButtonStyle}"  Click="AppBarHomeButton_Click" AutomationProperties.Name="主页"/>
+                    <Button x:Name="AppBarEditButton" Style="{StaticResource EditAppBarButtonStyle}"  Click="AppBarEditButton_Click" AutomationProperties.Name="编辑"/>
+                    <Button x:Name="AppBarAddButton" Style="{StaticResource AddAppBarButtonStyle}" Click="AppBarAddButton_Click" AutomationProperties.Name="添加"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <Button x:Name="AppBarHelpButton" Click="Help_Click" Style="{StaticResource HelpAppBarButtonStyle}" />
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+    
 </common:LayoutAwarePage>

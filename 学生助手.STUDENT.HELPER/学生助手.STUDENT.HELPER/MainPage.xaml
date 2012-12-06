@@ -15,10 +15,10 @@
         <CollectionViewSource
             x:Name="itemsViewSource"
             Source="{Binding Items}"
-            d:Source="{Binding AllGroups, Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"/>
+            d:Source="{Binding AllGroups, Source=solomeData}"/>
     </Page.Resources>
     
-    <Grid Background="#FF3B89B6">
+    <Grid x:Name="MainPage_Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -43,24 +43,25 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="学生助手|STUDENT.HELPER" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" FontFamily="SketchFlow Print" FontWeight="Bold" Foreground="#DEC0BFE2" Margin="62,0,30,40"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="学生助手|STUDENT.HELPER" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" FontFamily="SketchFlow Print,Segoe Print" FontWeight="Bold" Margin="62,0,30,40" Foreground="#DE012E8F"/>
         </Grid>
     </Grid>
 
     <Page.BottomAppBar>
-        <AppBar>
-            <Grid Background="Firebrick" HorizontalAlignment="Left" Width="1346">
+        <AppBar Background="#FF2051A6" AllowDrop="True">
+            <Grid HorizontalAlignment="Left" Width="1346">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="425*">
                     </ColumnDefinition>
                     <ColumnDefinition Width="248*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left">
-                    <Button x:Name="AppBarSearchButton" Style="{StaticResource SearchAppBarButtonStyle}" AutomationProperties.Name="搜索"/>
-                    <Button x:Name="AppBarEditButton" Style="{StaticResource EditAppBarButtonStyle}" Click="AppBarEditButton_Click" AutomationProperties.Name="编辑"/>
+                    <Button x:Name="AppBarEditButton" Style="{StaticResource EditAppBarButtonStyle}"  Click="AppBarEditButton_Click" AutomationProperties.Name="编辑"/>
+                    <Button x:Name="AppBarAddButton" Style="{StaticResource AddAppBarButtonStyle}" Click="AppBarAddButton_Click" AutomationProperties.Name="添加"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                    <Button x:Name="AppBarHomeButton" Style="{StaticResource HelpAppBarButtonStyle}" />
+                    <Button x:Name="AppBarHomeButton" Click="Help_Click" Style="{StaticResource HelpAppBarButtonStyle}" />
+                    <Button x:Name="AppBarAdminButton" Style="{StaticResource AdminAppBarButtonStyle}" Click="AppBarEditButton_Click" AutomationProperties.Name="管理"/>
                 </StackPanel>
             </Grid>
         </AppBar>

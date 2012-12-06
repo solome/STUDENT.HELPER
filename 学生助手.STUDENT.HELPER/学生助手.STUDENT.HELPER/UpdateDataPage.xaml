@@ -16,15 +16,8 @@
         <x:String x:Key="AppName">学生助手|STUDENT HELPER</x:String>
     </Page.Resources>
 
-    <!--
-        This grid acts as a root panel for the page that defines two rows:
-        * Row 0 contains the back button and page title
-        * Row 1 contains the rest of the page layout
-    -->
-    <Grid Style="{StaticResource LayoutRootStyle}">
-        <Grid.Background>
-            <ImageBrush ImageSource="Assets/background.jpg"/>
-        </Grid.Background>
+    <Grid x:Name="UpdateDataPage_Main_Grid" Style="{StaticResource LayoutRootStyle}">
+      
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -37,20 +30,20 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}" FontFamily="SketchFlow Print" FontWeight="Bold"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}" FontFamily="SketchFlow Print,Segoe Print" FontWeight="Bold" Foreground="#DEEA400D"/>
         </Grid>
         <Canvas>
 
         </Canvas>
-        <TextBlock HorizontalAlignment="Left" Margin="164,60,0,0" Grid.Row="1" TextWrapping="Wrap" Text="日期选择：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="164,60,0,0" Grid.Row="1" TextWrapping="Wrap" Text="日期选择：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="#FFFB5454"/>
         <TextBlock HorizontalAlignment="Left" Margin="164,140,0,0" Grid.Row="1" TextWrapping="Wrap" Text="课程名：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="#FFE21F66"/>
-        <TextBox HorizontalAlignment="Left" Margin="288,136,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="352" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFC1FFF9" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFC32FDA"/>
+        <TextBox x:Name="Title_TextBox" HorizontalAlignment="Left" Margin="288,136,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="352" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFC1FFF9" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFC32FDA"/>
         <TextBlock HorizontalAlignment="Left" Margin="164,204,0,0" Grid.Row="1" TextWrapping="Wrap" Text="开课地点：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold"/>
-        <TextBox HorizontalAlignment="Left" Margin="318,200,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="322" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFABFFB7" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFB62121"/>
+        <TextBox x:Name="SubTitle_TextBox" HorizontalAlignment="Left" Margin="318,200,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="322" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFABFFB7" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFB62121"/>
         <TextBlock HorizontalAlignment="Left" Margin="164,266,0,0" Grid.Row="1" TextWrapping="Wrap" Text="授课教师：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="#FF82EAC4"/>
-        <TextBox HorizontalAlignment="Left" Margin="318,262,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="322" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFAEB2FD" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFD6CE16"/>
+        <TextBox x:Name="Teacher_TextBox" HorizontalAlignment="Left" Margin="318,260,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="322" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFAEB2FD" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFD6CE16"/>
         <TextBlock HorizontalAlignment="Left" Margin="164,330,0,0" Grid.Row="1" TextWrapping="Wrap" Text="选用教材：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold"/>
-        <TextBox HorizontalAlignment="Left" Margin="318,326,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="322" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFF190FB" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFDE11D5"/>
+        <TextBox x:Name="TextBook_TextBox" HorizontalAlignment="Left" Margin="318,326,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="322" Background="{x:Null}" BorderThickness="0,0,0,2" FontSize="21" FontWeight="Bold" Foreground="#FFF190FB" TextAlignment="Center" FontFamily="Microsoft YaHei UI" BorderBrush="#FFDE11D5"/>
         <TextBlock HorizontalAlignment="Left" Margin="164,406,0,0" Grid.Row="1" TextWrapping="Wrap" Text="授课时间安排" VerticalAlignment="Top" FontSize="36" FontWeight="Bold">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -63,12 +56,12 @@
             </TextBlock.Foreground>
         </TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="172,464,0,0" Grid.Row="1" TextWrapping="Wrap" Text="起始时间：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="428,464,0,0" Grid.Row="1" TextWrapping="Wrap" Text="结束时间：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="172,516,0,0" Grid.Row="1" TextWrapping="Wrap" Text="结束时间：" VerticalAlignment="Top" FontSize="32" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="651,32,0,0" Grid.Row="1" TextWrapping="Wrap" Text="课程的备注描述：" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="#FFC78888" Height="53"/>
-        <TextBox HorizontalAlignment="Left" Margin="710,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="434" Width="630" Background="{x:Null}" FontFamily="Global User Interface" FontSize="36" Foreground="#FFB5F1FB" Grid.Row="1" BorderBrush="#FFFF92FA" AcceptsReturn="True"/>
+        <TextBox x:Name="Description" HorizontalAlignment="Left" Margin="695,77,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="434" Width="636" FontFamily="Global User Interface" FontSize="36" Grid.Row="1" BorderBrush="#FFFF92FA" AcceptsReturn="True" Background="{StaticResource AppBarItemPointerOverBackgroundThemeBrush}" Foreground="#FFD502EA"/>
         <Button Click="CancelButton_Click" Content="取消" BorderThickness="0" HorizontalAlignment="Left" Margin="1032,516,0,0" Grid.Row="1" VerticalAlignment="Top" Height="66" Width="208" Background="{x:Null}" FontSize="32" Foreground="#FFF5D3EF"/>
         <Button Click="OKButton_Click" Content="确定" BorderThickness="0" HorizontalAlignment="Left" Margin="852,516,0,0" Grid.Row="1" VerticalAlignment="Top" Height="66" Width="208" Background="{x:Null}" FontSize="32" Foreground="#FF5C70F0"/>
-        <ComboBox HorizontalAlignment="Left" Margin="325,58,0,0" Grid.Row="1" VerticalAlignment="Top" Width="110" Height="44" Background="{x:Null}" BorderBrush="#CC00E8FF" Foreground="#FF14E60A" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2" Opacity="0.8">
+        <ComboBox x:Name="Week_ComboBox" HorizontalAlignment="Left" Margin="325,58,0,0" Grid.Row="1" VerticalAlignment="Top" Width="110" Height="44" Background="{x:Null}" BorderBrush="#CC00E8FF" Foreground="#FF14E60A" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2" Opacity="0.8">
             <ComboBoxItem Content="星期日"/>
             <ComboBoxItem Content="星期一"/>
             <ComboBoxItem Content="星期二"/>
@@ -77,7 +70,7 @@
             <ComboBoxItem Content="星期五"/>
             <ComboBoxItem Content="星期六"/>
         </ComboBox>
-        <ComboBox HorizontalAlignment="Left" Margin="333,454,0,0" Grid.Row="1" VerticalAlignment="Top" Width="78" Height="44" Background="{x:Null}" BorderBrush="#CC9CAC01" Foreground="#FFFF0046" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2">
+        <ComboBox x:Name="Start_Hour_ComboBox" HorizontalAlignment="Left" Margin="369,448,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="44" Background="{x:Null}" BorderBrush="#CC9CAC01" Foreground="#FFFF0046" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2">
             <ComboBoxItem Content="00"/>
             <ComboBoxItem Content="01"/>
             <ComboBoxItem Content="02"/>
@@ -104,7 +97,7 @@
             <ComboBoxItem Content="23"/>
             <ComboBoxItem Content="24"/>
         </ComboBox>
-        <ComboBox HorizontalAlignment="Left" Margin="589,458,0,0" Grid.Row="1" VerticalAlignment="Top" Width="78" Height="44" Background="{x:Null}" BorderBrush="#CCDC00FF" Foreground="#FFFF0DE9" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2">
+        <ComboBox x:Name="Start_Minute_ComboBox" HorizontalAlignment="Left" Margin="485,450,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="44" Background="{x:Null}" BorderBrush="#CCDC00FF" Foreground="#FFFF0DE9" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2">
             <ComboBoxItem Content="00"/>
             <ComboBoxItem Content="05"/>
             <ComboBoxItem Content="10"/>
@@ -119,6 +112,51 @@
             <ComboBoxItem Content="55"/>
         </ComboBox>
         <Image HorizontalAlignment="Left" Height="150" Margin="1048,6,0,0" VerticalAlignment="Top" Width="310" Source="Assets/SplashScreen.png" Grid.RowSpan="2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="334,460,0,0" Grid.Row="1" TextWrapping="Wrap" Text="时" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="#FFB8AFAF"/>
+        <TextBlock HorizontalAlignment="Left" Margin="450,460,0,0" Grid.Row="1" TextWrapping="Wrap" Text="分" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="#FF7B82C7"/>
+        <ComboBox x:Name="End_Hour_ComboBox" HorizontalAlignment="Left" Margin="369,500,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="44" Background="{x:Null}" BorderBrush="#CC9CAC01" Foreground="#FFFF0046" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2">
+            <ComboBoxItem Content="00"/>
+            <ComboBoxItem Content="01"/>
+            <ComboBoxItem Content="02"/>
+            <ComboBoxItem Content="03"/>
+            <ComboBoxItem Content="04"/>
+            <ComboBoxItem Content="05"/>
+            <ComboBoxItem Content="06"/>
+            <ComboBoxItem Content="07"/>
+            <ComboBoxItem Content="08"/>
+            <ComboBoxItem Content="09"/>
+            <ComboBoxItem Content="10"/>
+            <ComboBoxItem Content="11"/>
+            <ComboBoxItem Content="12"/>
+            <ComboBoxItem Content="13"/>
+            <ComboBoxItem Content="14"/>
+            <ComboBoxItem Content="15"/>
+            <ComboBoxItem Content="16"/>
+            <ComboBoxItem Content="17"/>
+            <ComboBoxItem Content="18"/>
+            <ComboBoxItem Content="19"/>
+            <ComboBoxItem Content="20"/>
+            <ComboBoxItem Content="21"/>
+            <ComboBoxItem Content="22"/>
+            <ComboBoxItem Content="23"/>
+            <ComboBoxItem Content="24"/>
+        </ComboBox>
+        <ComboBox x:Name="End_Minute_ComboBox" HorizontalAlignment="Left" Margin="485,502,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="44" Background="{x:Null}" BorderBrush="#CCDC00FF" Foreground="#FFFF0DE9" FontSize="21" FontWeight="Bold" FontFamily="Microsoft YaHei UI" SelectedIndex="0" BorderThickness="0,0,0,2">
+            <ComboBoxItem Content="00"/>
+            <ComboBoxItem Content="05"/>
+            <ComboBoxItem Content="10"/>
+            <ComboBoxItem Content="15"/>
+            <ComboBoxItem Content="20"/>
+            <ComboBoxItem Content="25"/>
+            <ComboBoxItem Content="30"/>
+            <ComboBoxItem Content="35"/>
+            <ComboBoxItem Content="40"/>
+            <ComboBoxItem Content="45"/>
+            <ComboBoxItem Content="50"/>
+            <ComboBoxItem Content="55"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="334,512,0,0" Grid.Row="1" TextWrapping="Wrap" Text="时" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="#FF9B9191"/>
+        <TextBlock HorizontalAlignment="Left" Margin="450,512,0,0" Grid.Row="1" TextWrapping="Wrap" Text="分" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Foreground="#FF747ABD"/>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
@@ -149,4 +187,24 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
+
+    <Page.BottomAppBar>
+        <AppBar Background="#FF2051A6" AllowDrop="True">
+            <Grid HorizontalAlignment="Left" Width="1346">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="425*">
+                    </ColumnDefinition>
+                    <ColumnDefinition Width="248*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left">
+                    <Button x:Name="AppBarHomeButton" Style="{StaticResource HomeAppBarButtonStyle}"  Click="AppBarHomeButton_Click" AutomationProperties.Name="主页"/>
+                    <Button x:Name="AppBarCancelButton" Style="{StaticResource NoAppBarButtonStyle}" Click="CancelButton_Click" AutomationProperties.Name="取消"/>
+                    <Button x:Name="AppBarYesButton" Style="{StaticResource YesAppBarButtonStyle}" Click="OKButton_Click" AutomationProperties.Name="确定"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <Button x:Name="AppBarHelpButton" Click="Help_Click" Style="{StaticResource HelpAppBarButtonStyle}" />
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
 </common:LayoutAwarePage>

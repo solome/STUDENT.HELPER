@@ -14,6 +14,8 @@
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>学生助手.STUDENT.HELPER_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>17A058FB0A3BF72541B6C157551E29DDEAFEE771</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\Andrew Shaw\Desktop\result\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -101,9 +103,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -115,6 +114,9 @@
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
+    <Compile Include="HelpBasicPage.xaml.cs">
+      <DependentUpon>HelpBasicPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -125,6 +127,9 @@
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="UpdateDataPage.xaml.cs">
       <DependentUpon>UpdateDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePage.xaml.cs">
+      <DependentUpon>UpdatePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -168,21 +173,22 @@
     <Content Include="Assets\7.png" />
     <Content Include="Assets\8.png" />
     <Content Include="Assets\9.png" />
-    <Content Include="Assets\background.jpg" />
-    <Content Include="Assets\backgroundd.jpg" />
+    <Content Include="Assets\background_1.jpg" />
+    <Content Include="Assets\background_2.jpg" />
+    <Content Include="Assets\background_3.jpg" />
+    <Content Include="Assets\background_4.jpg" />
+    <Content Include="Assets\background_5.jpg" />
+    <Content Include="Assets\background_6.jpg" />
+    <Content Include="Assets\background_7.jpg" />
     <Content Include="Assets\DarkGray.png" />
     <Content Include="Assets\data.xml" />
     <Content Include="Assets\LightGray.png" />
     <Content Include="Assets\Log1o.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\MediumGray.png" />
-    <Content Include="Assets\sh.xml" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\student.helper.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Tile_1.png" />
     <Content Include="Assets\Tile_2.png" />
     <Content Include="Assets\Tile_3.png" />
@@ -201,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="HelpBasicPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -213,6 +223,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=11.0">
+      <Name>Microsoft Visual C++ Runtime Package</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.WinRT, Version=3.7.14.1">
+      <Name>SQLite for Windows Runtime</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

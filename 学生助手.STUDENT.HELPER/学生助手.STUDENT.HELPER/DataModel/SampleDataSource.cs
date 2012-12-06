@@ -17,7 +17,7 @@ using Windows.Storage;
 using System.Collections;
 using System.IO;
 using System.Xml;
-
+using SQLite;
 
 namespace 学生助手.STUDENT.HELPER.Data
 {
@@ -30,14 +30,14 @@ namespace 学生助手.STUDENT.HELPER.Data
             String teacherName, String textBook, DateTime start = new DateTime(), DateTime end = new DateTime())
         {
             this._uniqueId = uniqueId;
-            this._title = title;//课程名
-            this._subtitle = subtitle;//开课地点
-            this._description = description;//课程描述
-            this._imagePath = imagePath;//课程图片路径
-            this._teacherName = teacherName;//授课教师名
-            this._textBook = textBook;//授课选用教材
-            this._start = start; //开始时间
-            this._end = end;    //结束时间
+            this._title = title;
+            this._subtitle = subtitle;
+            this._description = description;
+            this._imagePath = imagePath;
+            this._teacherName = teacherName;
+            this._textBook = textBook;
+            this._start = start; 
+            this._end = end;   
         }
         //ID
         private string _uniqueId = string.Empty;
@@ -110,7 +110,7 @@ namespace 学生助手.STUDENT.HELPER.Data
         private string _textBook = string.Empty;
         public string TextBook
         {
-            get { return String.Format("《{0}》", this._textBook); }
+            get { return String.Format("{0}", this._textBook); }
             set { this.SetProperty(ref this._textBook, value); }
         }
 
@@ -121,8 +121,8 @@ namespace 学生助手.STUDENT.HELPER.Data
         {
             get
             {
-                return String.Format("|{0}:{1}-{2}:{3}",
-                    _start.Hour, _start.Second, _end.Hour, _end.Second);
+                return String.Format("|{0}-{1}",
+                    _start.ToString("HH:mm"), _end.ToString("HH:mm"));
             }
         }
 
@@ -159,8 +159,8 @@ namespace 学生助手.STUDENT.HELPER.Data
 
     public class SampleDataGroup : SampleDataCommon
     {
-        public SampleDataGroup(String uniqueId, String title, String subtitle, String imagePath, String description,
-            String teacherName, String textBook, DateTime start = new DateTime(), DateTime end = new DateTime())
+        public SampleDataGroup(String uniqueId, String title, String subtitle, String imagePath, String description = "",
+            String teacherName = "", String textBook = "", DateTime start = new DateTime(), DateTime end = new DateTime())
             : base(uniqueId, title, subtitle, imagePath, description, teacherName, textBook, start, end)
         {
             Items.CollectionChanged += ItemsCollectionChanged;
@@ -260,7 +260,6 @@ namespace 学生助手.STUDENT.HELPER.Data
 
         public static SampleDataGroup GetGroup(string uniqueId)
         {
-            // Simple linear search is acceptable for small data sets
             var matches = _sampleDataSource.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1) return matches.First();
             return null;
@@ -275,346 +274,157 @@ namespace 学生助手.STUDENT.HELPER.Data
 
         public SampleDataSource()
         {
-            String ITEM_CONTENT = String.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n{7}\n{8}\n{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n{7}\n{8}",
-                        "行动是成功的阶梯，行动越多，登得越高。",
-                        "没有口水与汗水，就没有成功的泪水。",
-                        "任何的限制，都是从自己的内心开始的。",
-                        "成功的法则极为简单，但简单并不代表容易。",
-                        "做对的事情比把事情做对重要",
-                        "苦想没盼头，苦干有奔头。",
-                        "自己打败自己的远远多于比别人打败的。",
-                        "忍耐力较诸脑力，尤胜一筹。", "环境不会改变，解决之道在于改变自己。");
+
+            string[] INIT_QUEO = { 
+                "喜欢读书，就等于把生活中寂寞的辰光换成巨大享受的时刻。 —— 孟德斯鸠", 
+                "勤奋可以弥补聪明的不足，但聪明无法弥补懒惰的缺陷。", 
+                "我学习了一生，现在我还在学习，而将来，只要我还有精力，我还要学习下去。 -----别林斯基", 
+                "努力向上的开拓，才使弯曲的竹鞭化作了笔直的毛竹。",  
+                "古之立大事者，不惟有超世之才，亦必有坚忍不拔之志。", 
+                "天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为。", 
+                "在劳力上劳心，是一切发明之母。事事在劳力上劳心，变可得事物之真理。", 
+                "茂盛的禾苗需要水分;成长的少年需要学习。", 
+                "勤奋的含义是今天的热血，而不是明天的决心，后天的保证。", 
+                "有事者，事竟成；破釜沉舟，百二秦关终归楚；苦心人，天不负；卧薪尝胆，三千越甲可吞吴。", 
+                "积极的人在每一次忧患中都看到一个机会，而消极的人则在每个机会都看到某种忧患。", 
+                "伟人之所以伟大，是因为他与别人共处逆境时，别人失去了信心，他却下决心实现自己的目标。", 
+                "当你感到悲哀痛苦时，最好是去学些什么东西。学习会使你永远立于不败之地。", 
+                "如果你希望成功，以恒心为良友，以经验为参谋，以小心为兄弟，以希望为哨兵。 ", 
+                "一个能从别人的观念来看事情，能了解别人心灵活动的人，永远不必为自己的前途担心。", 
+                "环境永远不会十全十美，消极的人受环境控制，积极的人却控制环境。 ", 
+                "事实上，成功仅代表了你工作的1%，成功是99%失败的结果。 ", 
+                "竞争颇似打网球，与球艺胜过你的对手比赛，可以提高你的水平。", 
+                "你可以选择这样的“三心二意”：信心、恒心、决心；创意、乐意。", 
+                "当你还不能对自己说今天学到了什么东西时，你就不要去睡觉。", 
+                "学然后知不足，教然后知困。知不足，然后能自反也；知困，然后能自强也。", 
+                "做学问的功夫，是细嚼慢咽的功夫。好比吃饭一样，要嚼得烂，方好消化，才会对人体有益。", 
+                "须交有道之人,莫结无义之友。饮清静之茶，莫贪花色之酒。开方便之门，闲是非之口。", 
+                "罗马人凯撒大帝，威震欧亚非三大陆，临终告诉侍者说：“请把我的双手放在棺材外面，让世人看看，伟大如我凯撒者，死后也是两手空空。", 
+                "生气，就是拿别人的过错来惩罚自己。原谅别人，就是善待自己。", 
+                "我不去想是否能够成功，既然选择了远方，便只顾风雨兼程；我不去想身后会不会袭来寒风冷雨，既然目标是地平线，留给世界的只能是背影。", 
+                "现在睡觉的话会做梦 而现在学习的话会让梦实现。", 
+                "摒弃侥幸之念，必取百炼成钢；厚积分秒之功，始得一鸣惊人。", 
+                "惜光阴百日犹短，看众志成城拼搏第一；细安排一刻也长，比龙争虎斗谁为争锋？！",
+                "没有一颗心，会因为努力生活而受伤。当你真心感恩生活努力想过好每一天的时候，全宇宙都会来帮忙。"};
+
             Random random = new Random();
 
-            var group1 = new SampleDataGroup("1",
-                    "星期日",//星期
-                    "努力多一点，明天好一点",//励志名言
-                    "Assets/" + random.Next(0, 30) + ".png",//背景图片
-                    "当一个小小的心念变成成为行为时，便能成了习惯；从而形成性格，而性格就决定你一生的成败。", "失的猛", "ASP.NET网页设计");
-            group1.Items.Add(new SampleDataItem("Group-1-Item-1",
-                    "深入浅出WPF",
-                    "北校区9#424",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "好好研究WPF技术，打好WPF技术会对学习Windows8和Windows phone开发提供方便。",
-                    ITEM_CONTENT,
-                    group1,
-                    "失的猛", "ASP.NET网页设计"));
-            group1.Items.Add(new SampleDataItem("Group-1-Item-2",
-                   "深入浅出WPF",
-                   "北校区9#424",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "好好研究WPF技术，打好WPF技术会对学习Windows8和Windows phone开发提供方便。",
-                   ITEM_CONTENT,
-                   group1,
-                   "失的猛", "ASP.NET网页设计"));
-            group1.Items.Add(new SampleDataItem("Group-1-Item-2",
-                   "深入浅出WPF",
-                   "北校区9#424",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "好好研究WPF技术，打好WPF技术会对学习Windows8和Windows phone开发提供方便。",
-                   ITEM_CONTENT,
-                   group1,
-                   "失的猛", "ASP.NET网页设计"));
-            group1.Items.Add(new SampleDataItem("Group-1-Item-2",
-                   "深入浅出WPF",
-                   "北校区9#424",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "好好研究WPF技术，打好WPF技术会对学习Windows8和Windows phone开发提供方便。",
-                   ITEM_CONTENT,
-                   group1,
-                   "失的猛", "ASP.NET网页设计"));
-            this.AllGroups.Add(group1);
+            int GroupIndex = random.Next(0, 30);
+            int GroupItemIndex = random.Next(0, 30);
+            int INIT_QUEOIndex = random.Next(0, 30);
+            int le = INIT_QUEO.Length;
+            Messages temp;
+            List<object> list = App.db.Query(new TableMapping(typeof(Messages)), "select * From messages where week = '0' ");
+            var groupSunday = new SampleDataGroup("Sunday","星期日","努力多一点，明天好一点","Assets/" + (GroupIndex++) % 31 + ".png");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] is Messages)
+                {
+                    temp = (Messages)list[i];
+                    groupSunday.Items.Add(new SampleDataItem("Group-Sunday" + i, temp.Title,
+                           temp.Subtitle, "Assets/" + (GroupItemIndex++) % 31 + ".png",
+                           INIT_QUEO[((INIT_QUEOIndex++) % 30)], temp.Description,
+                           groupSunday,
+                           temp.Teacher, temp.TextBook, DateTime.Parse(temp.Start), DateTime.Parse(temp.End)));
+                }
+            }
+            this.AllGroups.Add(groupSunday);
 
-            var group2 = new SampleDataGroup("2",
-                    "星期一",
-                    "执着是唯一的解药",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "这个世界并不是掌握在那些嘲笑者的手中，而恰恰掌握在能够经受得住嘲笑与批评忍不断往前走的人手中。",
-                    "失的猛", "ASP.NET网页设计");
-            group2.Items.Add(new SampleDataItem("Group-2-Item-1",
-                    "Java语言程序设计",
-                    "北校区9#424",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "投资知识是明智的，投资网络中的知识就更加明智。没有天生的信心，只有不断培养的信心。",
-                    ITEM_CONTENT,
-                    group2, "失的猛", "ASP.NET网页设计"));
-            group2.Items.Add(new SampleDataItem("Group-2-Item-1",
-                   "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                   "只有一条路不能选择——那就是放弃的路；只有一条路不能拒绝——那就是成长的路。",
-                   ITEM_CONTENT,
-                   group2, "失的猛", "ASP.NET网页设计"));
-            group2.Items.Add(new SampleDataItem("Group-2-Item-1",
-                   "数据挖掘",
-                   "南区10#712",
-                  "Assets/" + random.Next(0, 30) + ".png",
-                   "人的才华就如海绵的水，没有外力的挤压，它是绝对流不出来的。流出来后，海绵才能吸收新的源泉。",
-                   ITEM_CONTENT,
-                   group2, "失的猛", "ASP.NET网页设计"));
-            group2.Items.Add(new SampleDataItem("Group-2-Item-1",
-                  "数据挖掘",
-                   "南区10#712",
-                  "Assets/" + random.Next(0, 30) + ".png",
-                   "伟大的事业不是靠力气速度和身体的敏捷完成的，而是靠性格意志和知识的力量完成的。",
-                   ITEM_CONTENT,
-                   group2, "失的猛", "ASP.NET网页设计"));
-            group2.Items.Add(new SampleDataItem("Group-2-Item-1",
-                 "数据挖掘",
-                   "南区10#712",
-                  "Assets/" + random.Next(0, 30) + ".png",
-                   "肉体是精神居住的花园，意志则是这个花园的园丁。意志既能使肉体“贫瘠”下去，又能用勤劳使它“肥沃”起来。",
-                   ITEM_CONTENT,
-                   group2, "失的猛", "ASP.NET网页设计"));
-            group2.Items.Add(new SampleDataItem("Group-2-Item-1",
-                  "数据挖掘",
-                   "南区10#712",
-                  "Assets/" + random.Next(0, 30) + ".png",
-                   "为明天做准备的最好方法就是集中你所有智慧，所有的热忱，把今天的工作做得尽善尽美，这就是你能应付未来的唯一方法。",
-                   ITEM_CONTENT,
-                   group2, "失的猛", "ASP.NET网页设计"));
-            this.AllGroups.Add(group2);
+            list = App.db.Query(new TableMapping(typeof(Messages)), "select * From messages where week = '4' ");
+            var groupThursday = new SampleDataGroup("Thursday", "星期四", "青春无悔，拼搏最美", "Assets/" + (GroupIndex++) % 31 + ".png");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] is Messages)
+                {
+                    temp = (Messages)list[i];
+                    groupThursday.Items.Add(new SampleDataItem("Group-Thursday" + i, temp.Title,
+                           temp.Subtitle, "Assets/" + (GroupItemIndex++) % 31 + ".png",
+                           INIT_QUEO[((INIT_QUEOIndex++) % 30)], temp.Description,
+                           groupThursday,
+                           temp.Teacher, temp.TextBook, DateTime.Parse(temp.Start), DateTime.Parse(temp.End)));
+                }
+            }
+            this.AllGroups.Add(groupThursday);
 
-            var group3 = new SampleDataGroup("3",
-                    "星期二",
-                    "执着不惜",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "人性最可怜的就是：我们总是梦想着天边的一座奇妙的玫瑰园，而不去欣赏今天就开在我们窗口的玫瑰。",
-                    "失的猛", "ASP.NET网页设计");
-            group3.Items.Add(new SampleDataItem("Group-3-Item-1",
-                  "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "这世上的一切都借希望而完成，农夫不会剥下一粒玉米，如果他不曾希望它长成种粒；单身汉不会娶妻，如果他不曾希望有孩子；商人也不会去工作，如果他不曾希望因此而有收益。",
-                    ITEM_CONTENT,
-                    group3,
-                    "失的猛", "ASP.NET网页设计"));
-            group3.Items.Add(new SampleDataItem("Group-3-Item-1",
-                    "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "障碍与失败，是通往成功最稳靠的踏脚石，肯研究利用它们，便能从失败中培养出成功。",
-                    ITEM_CONTENT,
-                    group3,
-                    "失的猛", "ASP.NET网页设计"));
-            group3.Items.Add(new SampleDataItem("Group-3-Item-1",
-                   "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "人生舞台的大幕随时都可能拉开，关键是你愿意表演，还是选择躲避。能把在面前行走的机会抓住的人，十有八九都会成功。",
-                    ITEM_CONTENT,
-                    group3,
-                    "失的猛", "ASP.NET网页设计"));
-            group3.Items.Add(new SampleDataItem("Group-3-Item-1",
-                  "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "相信就是强大，怀疑只会抑制能力，而信仰就是力量。那些尝试去做某事却失败的人，比那些什么也不尝试做却成功的人不知要好上多少。",
-                    ITEM_CONTENT,
-                    group3,
-                    "失的猛", "ASP.NET网页设计"));
-            group3.Items.Add(new SampleDataItem("Group-3-Item-1",
-                    "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "目标的坚定是性格中最必要的力量源泉之一，也是成功的利器之一。没有它，天才也会在矛盾无定的迷径中徒劳无功。",
-                    ITEM_CONTENT,
-                    group3,
-                    "失的猛", "ASP.NET网页设计"));
+            list = App.db.Query(new TableMapping(typeof(Messages)), "select * From messages where week = '1' ");
+            var groupMonday = new SampleDataGroup("Monday", "星期一", "天行健，君子以自强不息", "Assets/" + (GroupIndex++) % 31 + ".png");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] is Messages)
+                {
+                    temp = (Messages)list[i];
+                    groupMonday.Items.Add(new SampleDataItem("Group-Monday" + i, temp.Title,
+                           temp.Subtitle, "Assets/" + (GroupItemIndex++) % 31 + ".png",
+                           INIT_QUEO[((INIT_QUEOIndex++) % 30)], temp.Description,
+                           groupMonday,
+                           temp.Teacher, temp.TextBook,DateTime.Parse(temp.Start),DateTime.Parse(temp.End)));
+                }
+            }
+            this.AllGroups.Add(groupMonday);
 
-            this.AllGroups.Add(group3);
+            list = App.db.Query(new TableMapping(typeof(Messages)), "select * From messages where week = '5' ");
+            var groupFriday = new SampleDataGroup("Friday", "星期五", "十年树木,百年树人", "Assets/" + (GroupIndex++) % 31 + ".png");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] is Messages)
+                {
+                    temp = (Messages)list[i];
+                    groupFriday.Items.Add(new SampleDataItem("Group-Friday" + i, temp.Title,
+                           temp.Subtitle, "Assets/" + (GroupItemIndex++) % 31 + ".png",
+                           INIT_QUEO[((INIT_QUEOIndex++) % 30)], temp.Description,
+                           groupMonday,
+                           temp.Teacher, temp.TextBook, DateTime.Parse(temp.Start), DateTime.Parse(temp.End)));
+                }
+            }
+            this.AllGroups.Add(groupFriday);
 
-            var group4 = new SampleDataGroup("4",
-                    "星期三",
-                    "智者一切求自己",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "没有什么事情有象热忱这般具有传染性，它能感动顽石，它是真诚的精髓。一个人几乎可以在任何他怀有无限热忱的事情上成功。",
-                    "失的猛", "ASP.NET网页设计");
+            list = App.db.Query(new TableMapping(typeof(Messages)), "select * From messages where week = '2' ");
+            var groupTuesday = new SampleDataGroup("Tuesday", "星期二", "绳锯木断，水滴石穿", "Assets/" + (GroupIndex++) % 31 + ".png");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] is Messages)
+                {
+                    temp = (Messages)list[i];
+                    groupTuesday.Items.Add(new SampleDataItem("Group-Tuesday" + i, temp.Title,
+                           temp.Subtitle, "Assets/" + (GroupItemIndex++) % 31 + ".png",
+                           INIT_QUEO[((INIT_QUEOIndex++) % 30)], temp.Description,
+                           groupTuesday,
+                           temp.Teacher, temp.TextBook, DateTime.Parse(temp.Start), DateTime.Parse(temp.End)));
+                }
+            }
+            this.AllGroups.Add(groupTuesday);           
 
-            group4.Items.Add(new SampleDataItem("Group-4-Item-6",
-                  "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "挫折时，要像大树一样，被砍了，还能再长；也要像杂草一样，虽让人践踏，但还能勇敢地活下去。",
-                    ITEM_CONTENT,
-                    group4,
-                    "失的猛", "ASP.NET网页设计"));
-            group4.Items.Add(new SampleDataItem("Group-4-Item-6",
-                  "数据挖掘",
-                   "南区10#712",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "沿着阻力最小(也就最简单)的方向努力，就像从高处往山下滚雪球一样，看起来每滚一圈雪球都没有什么变化，但却会越滚越快，越滚越大，膨胀速度惊人。",
-                    ITEM_CONTENT,
-                    group4,
-                    "失的猛", "ASP.NET网页设计"));
-            group4.Items.Add(new SampleDataItem("Group-4-Item-6",
-                    "网页设计",
-                    "北区 12#123",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "告诉老师，你自己的水平如何，哪些题目可以不做。老师会理解的。但是不能完全丢开老师，去搞自己的一套。应该以老师的课堂教学和布置的作业为基础，结合自己的实际水平做一些微调。",
-                    ITEM_CONTENT,
-                    group4,
-                    "失的猛", "ASP.NET网页设计"));
-            group4.Items.Add(new SampleDataItem("Group-4-Item-6",
-                       "网页设计",
-                    "北区 12#123",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "讲究条理。将重要的学习用品和资料用书立或指向装好，分类存放，避免用时东翻西找。每天有天计划，每周有周计划，按计划有条不紊地做事，不一暴十寒。",
-                    ITEM_CONTENT,
-                    group4,
-                    "失的猛", "ASP.NET网页设计"));
-            group4.Items.Add(new SampleDataItem("Group-4-Item-6",
-                      "网页设计",
-                    "北区 12#123",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "以学为先。在他们心目中，学习是正事，理应先于娱乐，一心向学，气定神闲，心无旁骛，全力以赴，忘我备战。",
-                    ITEM_CONTENT,
-                    group4,
-                    "失的猛", "ASP.NET网页设计"));
-            this.AllGroups.Add(group4);
+            list = App.db.Query(new TableMapping(typeof(Messages)), "select * From messages where week = '6' ");
+            var groupSaturday = new SampleDataGroup("Saturday", "星期六", "莫等闲,白了少年头,空悲切", "Assets/" + (GroupIndex++) % 31 + ".png");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] is Messages)
+                {
+                    temp = (Messages)list[i];
+                    groupSaturday.Items.Add(new SampleDataItem("Group-Saturday" + i, temp.Title,
+                           temp.Subtitle, "Assets/" + (GroupItemIndex++) % 31 + ".png",
+                           INIT_QUEO[((INIT_QUEOIndex++) % 30)], temp.Description,
+                           groupMonday,
+                           temp.Teacher, temp.TextBook, DateTime.Parse(temp.Start), DateTime.Parse(temp.End)));
+                }
+            }
+            this.AllGroups.Add(groupSaturday);
 
-            var group5 = new SampleDataGroup("5",
-                    "星期四",
-                    "愚者一切求他人",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "成功呈概率分布，关键是你能不能坚持到成功开始呈现的那一刻。",
-                    "失的猛", "ASP.NET网页设计");
-            group5.Items.Add(new SampleDataItem("Group-5-Item-1",
-                    "网页设计",
-                    "北区 12#123",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "你可以这样理解impossible（不可能）——I'mpossible（我是可能的）。　",
-                    ITEM_CONTENT,
-                    group5, "失的猛", "ASP.NET网页设计"));
-            group5.Items.Add(new SampleDataItem("Group-5-Item-1",
-                  "网页设计",
-                    "北区 12#123",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "如果你希望成功，以恒心为良友，以经验为参谋，以小心为兄弟，以希望为哨兵。",
-                   ITEM_CONTENT,
-                   group5, "失的猛", "ASP.NET网页设计"));
-            group5.Items.Add(new SampleDataItem("Group-5-Item-1",
-                    "网页设计",
-                    "北区 12#123",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "任何的限制，都是从自己的内心开始的。忘掉失败，不过要牢记失败中的教训。",
-                   ITEM_CONTENT,
-                   group5, "失的猛", "ASP.NET网页设计"));
-            group5.Items.Add(new SampleDataItem("Group-5-Item-1",
-                    "网页设计",
-                    "北区 12#123",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "每一日你所付出的代价都比前一日高，因为你的生命又消短了一天，所以每一日你都要更积极。今天太宝贵，不应该为酸苦的忧虑和辛涩的悔恨所销蚀，抬起下巴，抓住今天，它不再回来。",
-                   ITEM_CONTENT,
-                   group5, "失的猛", "ASP.NET网页设计"));
-            group5.Items.Add(new SampleDataItem("Group-5-Item-1",
-                   "网页设计",
-                    "北区 12#123",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "环境永远不会十全十美，消极的人受环境控制，积极的人却控制环境。",
-                   ITEM_CONTENT,
-                   group5, "失的猛", "ASP.NET网页设计"));
-
-            this.AllGroups.Add(group5);
-
-            var group6 = new SampleDataGroup("6",
-                    "星期五",
-                    "放弃是魔鬼的举动",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "环境永远不会十全十美，消极的人受环境控制，积极的人却控制环境。",
-                    "失的猛", "ASP.NET网页设计");
-            group6.Items.Add(new SampleDataItem("Group-6-Item-1",
-                    "Java程序设计语言",
-                    "南区|12#324",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "拿望远镜看别人，拿放大镜看自己。",
-                    ITEM_CONTENT,
-                    group6, "失的猛", "ASP.NET网页设计"));
-            group6.Items.Add(new SampleDataItem("Group-6-Item-1",
-                   "Java程序设计语言",
-                    "南区|12#324",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "竞争颇似打网球，与球艺胜过你的对手比赛，可以提高你的水平。（戏从对手来。）只有不断找寻机会的人才会及时把握机会。",
-                    ITEM_CONTENT,
-                    group6, "失的猛", "ASP.NET网页设计"));
-            group6.Items.Add(new SampleDataItem("Group-6-Item-1",
-                    "Java程序设计语言",
-                    "南区|12#324",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "无论才能知识多么卓著，如果缺乏热情，则无异纸上画饼充饥，无补于事。",
-                    ITEM_CONTENT,
-                    group6, "失的猛", "ASP.NET网页设计"));
-            group6.Items.Add(new SampleDataItem("Group-6-Item-1",
-                    "Item Title: 1",
-                    "Item Subtitle: 1",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "当一个小小的心念变成成为行为时，便能成了习惯；从而形成性格，而性格就决定你一生的成败。",
-                    ITEM_CONTENT,
-                    group6, "失的猛", "ASP.NET网页设计"));
-            group6.Items.Add(new SampleDataItem("Group-6-Item-1",
-                    "Item Title: 1",
-                    "Item Subtitle: 1",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "这个世界并不是掌握在那些嘲笑者的手中，而恰恰掌握在能够经受得住嘲笑与批评忍不断往前走的人手中。",
-                    ITEM_CONTENT,
-                    group6, "失的猛", "ASP.NET网页设计"));
-
-            this.AllGroups.Add(group6);
-            var group7 = new SampleDataGroup("7",
-                    "星期六",
-                    "永不言弃",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "投资知识是明智的，投资网络中的知识就更加明智。没有天生的信心，只有不断培养的信心。",
-                    "失的猛", "ASP.NET网页设计");
-            group7.Items.Add(new SampleDataItem("Group-7-Item-1",
-                    "数据结构与算法",
-                    "南校区|10#467",
-                    "Assets/" + random.Next(0, 30) + ".png",
-                    "忍别人所不能忍的痛，吃别人所别人所不能吃的苦，是为了收获得不到的收获。",
-                    ITEM_CONTENT,
-                    group7,
-                    "失的猛", "ASP.NET网页设计"));
-            group7.Items.Add(new SampleDataItem("Group-7-Item-1",
-                   "数据结构与算法",
-                   "南校区|10#467",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "只有一条路不能选择——那就是放弃的路；只有一条路不能拒绝——那就是成长的路。",
-                   ITEM_CONTENT,
-                   group7,
-                   "失的猛", "ASP.NET网页设计"));
-            group7.Items.Add(new SampleDataItem("Group-7-Item-1",
-                   "数据结构与算法",
-                   "南校区|10#467",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "人的才华就如海绵的水，没有外力的挤压，它是绝对流不出来的。流出来后，海绵才能吸收新的源泉。",
-                   ITEM_CONTENT,
-                   group7,
-                   "失的猛", "ASP.NET网页设计"));
-            group7.Items.Add(new SampleDataItem("Group-7-Item-1",
-                   "数据结构与算法",
-                   "南校区|10#467",
-                   "Assets/" + random.Next(0, 30) + ".png",
-                   "伟大的事业不是靠力气速度和身体的敏捷完成的，而是靠性格意志和知识的力量完成的。",
-                   ITEM_CONTENT,
-                   group7,
-                   "失的猛", "ASP.NET网页设计"));
-            this.AllGroups.Add(group7);
-   
-            var group_for_a_test = new SampleDataGroup("10",
-                 "测试项",//星期
-                    "努力多一点，明天好一点",//励志名言
-                    "Assets/" + random.Next(0, 30) + ".png",//背景图片
-                    "当一个小小的心念变成成为行为时，便能成了习惯；从而形成性格，而性格就决定你一生的成败。", "失的猛", "ASP.NET网页设计");
-            group_for_a_test.Items.Add(new SampleDataItem("Group-8-Item-1", "C#入门经典", "10&560",
-                "Assets/" + random.Next(0, 30) + ".png",
-                "Just for a test",
-                "测试效果：此部分为课程的简单描述",
-                group_for_a_test,
-                "小白菜",
-                "C#入门经典 2012年版"));
-
-            this.AllGroups.Add(group_for_a_test);
-
+            list = App.db.Query(new TableMapping(typeof(Messages)), "select * From messages where week = '3' ");
+            var groupWednesday = new SampleDataGroup("Wednesday", "星期三", "博瞧而约取，厚积而薄发", "Assets/" + (GroupIndex++) % 31 + ".png");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (list[i] is Messages)
+                {
+                    temp = (Messages)list[i];
+                    groupWednesday.Items.Add(new SampleDataItem("Group-Wednesday" + i, temp.Title,
+                           temp.Subtitle, "Assets/" + ((GroupItemIndex++) % 31) + ".png",
+                           INIT_QUEO[((INIT_QUEOIndex++) % 30)], temp.Description,
+                           groupWednesday,
+                           temp.Teacher, temp.TextBook, DateTime.Parse(temp.Start), DateTime.Parse(temp.End)));
+                }
+            }
+            this.AllGroups.Add(groupWednesday);
         }
     }
 }

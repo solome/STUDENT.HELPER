@@ -1,0 +1,149 @@
+﻿<common:LayoutAwarePage
+    x:Name="pageRoot"
+    x:Class="学生助手.STUDENT.HELPER.HelpBasicPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:学生助手.STUDENT.HELPER"
+    xmlns:common="using:学生助手.STUDENT.HELPER.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+         
+        
+    </Page.Resources>
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
+    <Grid Background="#FF07152E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="学生助手|STUDENT.HELPER" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" FontFamily="SketchFlow Print,Segoe Print" FontWeight="Bold" Margin="8,0,84,40" Foreground="#DE6A96F5"/>
+        </Grid>
+
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="820" Width="1240" Margin="69,112,0,-164" Grid.RowSpan="2">
+        	<Run Foreground="Red" FontWeight="Bold" FontSize="36" FontFamily="Microsoft YaHei UI" Text="使用帮助"/>
+        	<LineBreak/>
+        	<Run/>
+        	<LineBreak/>
+        	<Run FontSize="26" Text="       "/>
+        	<Run FontWeight="Bold" FontSize="23" Text="本应用第一次运行时，会随机初始化大量的课程信息；当然，这些信息不是您所需要的，请您打开应用后自行删除，并开始录入您自己的课程信息。开始体验"/>
+        	<Run Foreground="#FF4B8A8D" FontWeight="Bold" FontSize="28" FontFamily="Segoe Print" Text="学生助手.STUDENT.HELPER"/>
+        	<Run FontWeight="Bold" FontSize="23" FontFamily="Segoe UI, Tahoma, Arial, Arial Unicode MS, Microsoft Sans Serif, Lucida Sans Unicode" Text="给您在学习生活中带来的方便吧！"/>
+        	<LineBreak/>
+        	<Run FontSize="26" Text="       "/>
+        	<Run Foreground="#FFE8004A" FontWeight="Bold" FontSize="26" FontFamily="Microsoft YaHei UI" Text="使用过程中请注意："/>
+        	<LineBreak/>
+        	<Run FontSize="26" FontFamily="宋体" Text="   "/>
+        	<Run Foreground="#FF9B9FF1" FontWeight="Bold" FontSize="28" FontFamily="黑体" Text="①"/>
+        	<Run Foreground="#FF9B9FF1" FontWeight="Bold" FontSize="28" FontFamily="Microsoft YaHei UI" Text="课程数据更新操作"/>
+        	<LineBreak/>
+        	<Run Foreground="#FF0BA026" FontSize="26" Text="        非触屏"/>
+        	<Run Foreground="#FF0BA026" FontSize="26" Text="计算机"/>
+        	<LineBreak/>
+        	<Run FontSize="26" Text="&#x9;"/>
+        	<Run FontSize="18" Text="             "/>
+        	<Run FontSize="18" Text="如果您的计算机并未提供触摸屏，且您欲进行课程数据更新操作，请您点击鼠标右键，即可出现相关的操作提示按钮。"/>
+        	<LineBreak/>
+        	<Run FontSize="26" Text="        "/>
+        	<Run Foreground="#FF118326" FontSize="26" Text="配置触摸屏的设备"/>
+        	<LineBreak/>
+        	<Run FontSize="26" Text="&#x9;"/>
+        	<Run FontSize="18" Text="             "/>
+        	<Run FontSize="18" Text="如果您的计算机配置了触摸屏，且您又不爱使用鼠标操作；您可以将手指移动到应用程序的低端，然后轻轻向上滑动即可，此时也会出现相关"/>
+        	<LineBreak/>
+        	<Run FontSize="18"/>
+        	<Run FontSize="18" Text="               "/>
+        	<Run FontSize="18" Text="操作的提示按钮。"/>
+        	<LineBreak/>
+        	<Run FontSize="26" FontFamily="宋体" Text="   "/>
+        	<Run Foreground="#FF5258DA" FontWeight="Bold" FontSize="28" FontFamily="宋体" Text="②"/>
+        	<Run Foreground="#FF5258DA" FontWeight="Bold" FontSize="28" FontFamily="Microsoft YaHei UI" Text="对于数据的添加与删除操作只会在应用程序下次重启的时候才会执行。"/>
+        	<LineBreak/>
+        	<Run FontSize="26" FontFamily="Segoe UI, Tahoma, Arial, Arial Unicode MS, Microsoft Sans Serif, Lucida Sans Unicode" Text="   &#x9;"/>
+        	<Run FontSize="26" FontFamily="Microsoft YaHei UI" Text="   "/>
+        	<Run FontSize="23" FontFamily="Microsoft YaHei UI" Text="当然，这完全是"/>
+        	<Run FontSize="23" FontFamily="Microsoft YaHei UI" Text="出于"/>
+        	<Run FontSize="23" FontFamily="Microsoft YaHei UI" Text="为了防止您因误操作而耽搁您的学习规划"/>
+        	<Run FontSize="23" FontFamily="Microsoft YaHei UI" Text="的考虑"/>
+        	<Run FontSize="23" FontFamily="Microsoft YaHei UI" Text="。"/>
+        	<LineBreak/>
+        	<Run Foreground="#FF2930BD" FontWeight="Bold" FontSize="28" FontFamily="宋体" Text="   ③"/>
+        	<Run Foreground="#FF2930BD" FontWeight="Bold" FontSize="28" FontFamily="Microsoft YaHei UI" Text="图片资源使用许可"/>
+        	<LineBreak/>
+        	<Run Foreground="#FF656680" FontWeight="Bold" FontSize="21" FontFamily="Microsoft YaHei UI" Text="           "/>
+        	<Run Foreground="#FF656680" FontWeight="Bold" FontSize="21" FontFamily="Microsoft YaHei UI" Text="本应用使用的图片资源均已获原作者HuiWan的许可，版权归HuiWan所有。"/>
+        	<LineBreak/>
+        	<Run FontSize="28" FontFamily="宋体" Text="   "/>
+        	<Run Foreground="#FF9094FB" FontWeight="Bold" FontSize="28" FontFamily="宋体" Text="④"/>
+        	<Run Foreground="#FF9094FB" FontWeight="Bold" FontSize="28" FontFamily="Microsoft YaHei UI" Text="与我联系"/>
+        	<LineBreak/>
+        	<Run FontSize="28" FontFamily="宋体" Text="     "/>
+        	<Run FontSize="28" FontFamily="Microsoft YaHei UI" Text="博客"/>
+        	<Run FontSize="28" FontFamily="宋体" Text="："/>
+        	<Run Foreground="#FF19B2D4" FontSize="28" FontFamily="Segoe UI" Text="http://blog.iliyang.cn/ "/>
+        	<Run FontSize="28" FontFamily="Microsoft YaHei UI" Text="邮箱"/>
+        	<Run FontSize="28" FontFamily="宋体" Text="："/>
+        	<Run Foreground="#FF3F44DE" FontSize="28" FontFamily="Segoe UI" Text="sunshine1914@live.cn"/>
+        	<LineBreak/>
+        	<Run Foreground="#FF3F44DE" FontSize="28" FontFamily="Segoe UI" Text=""/>
+        	<LineBreak/>
+        	<Run Foreground="#FFB9E622" FontSize="28" FontFamily="Segoe UI" Text="====================="/>
+        	<Run Foreground="#FFFF2C8C" FontWeight="Bold" FontSize="32" FontFamily="Segoe Print" Text="学生助手.STUDENT.HELPER"/>
+        	<Run Foreground="#FFB9E622" FontSize="28" FontFamily="Segoe UI" Text="=================="/>
+        	<LineBreak/>
+        	<Run Foreground="#FF2930BD" FontWeight="Bold" FontSize="28" FontFamily="宋体"/>
+        	<LineBreak/>
+        	<Run FontSize="11" FontFamily="Segoe UI, Tahoma, Arial, Arial Unicode MS, Microsoft Sans Serif, Lucida Sans Unicode" Text=""/>
+        	<LineBreak/>
+        	<Run FontFamily="Segoe UI, Tahoma, Arial, Arial Unicode MS, Microsoft Sans Serif, Lucida Sans Unicode" Text="&#x9;"/>
+        </TextBlock>
+
+
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscape"/>
+                <VisualState x:Name="Filled"/>
+
+                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!-- The back button and title have different styles when snapped -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</common:LayoutAwarePage>

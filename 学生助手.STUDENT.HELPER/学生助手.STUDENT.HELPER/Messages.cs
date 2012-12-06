@@ -27,5 +27,6 @@ namespace 学生助手.STUDENT.HELPER
         public string Start { get; set; }
         [MaxLength(30)]
         public string End { get; set; }
+
     }
 }

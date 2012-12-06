@@ -1671,6 +1671,33 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="ShowCourseItemTemplate">
+        <Grid Height="80" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Width="80" Height="80">
+                <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+            </Border>
+            <StackPanel Orientation="Horizontal"  Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+                <StackPanel Width="300">
+                    <TextBlock Text="{Binding Title}" FontSize="28" TextWrapping="NoWrap" TextAlignment="Justify"/>
+                    <TextBlock Text="{Binding Subtitle}" FontSize="26" TextWrapping="NoWrap"  TextAlignment="Justify" Foreground="#FFF1A3A3" FontWeight="Bold"/>
+                </StackPanel>
+                <StackPanel Width="300">
+                    <TextBlock Text="{Binding Start}" FontSize="28" TextWrapping="NoWrap" Foreground="#FFE7F559"/>
+                    <TextBlock Text="{Binding End}" FontSize="26" TextWrapping="NoWrap" Foreground="#FFF9FF80"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="{Binding Teacher}" FontSize="28" TextWrapping="NoWrap" Foreground="#FFF7A0F3" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Textbook}" FontSize="26" TextWrapping="NoWrap" Foreground="#FFDFC8F9" FontWeight="Bold"/>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    
     <!--
         List-appropriate 80 pixel high item template as seen in the SplitPage when Filled, and
         the following pages when snapped: GroupedItemsPage, GroupDetailPage, and ItemsPage
