@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snara", "snara\snara.csproj", "{3151F594-97FB-422A-B53F-1E5924F2D183}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modern", "Modern\Modern.csproj", "{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,16 @@ Global
 		{3151F594-97FB-422A-B53F-1E5924F2D183}.Release|x86.ActiveCfg = Release|x86
 		{3151F594-97FB-422A-B53F-1E5924F2D183}.Release|x86.Build.0 = Release|x86
 		{3151F594-97FB-422A-B53F-1E5924F2D183}.Release|x86.Deploy.0 = Release|x86
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC62F6BD-D755-40F2-93EB-7F99A6F83DA2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
