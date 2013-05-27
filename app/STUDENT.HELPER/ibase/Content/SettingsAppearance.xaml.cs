@@ -13,16 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Modern
+namespace ibase.Content
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for SettingsAppearance.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class SettingsAppearance : UserControl
     {
-        public Page1()
+        public SettingsAppearance()
         {
             InitializeComponent();
+
+            // create and assign the appearance view model
+            this.DataContext = new SettingsAppearanceViewModel();
         }
     }
 }

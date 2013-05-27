@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="ibase.Pages.weibo.WeiboLogin"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="480" d:DesignWidth="800">
+    <Canvas VerticalAlignment="Stretch" Width="800" Height="480">
+        <StackPanel x:Name="spl_Login" Canvas.Left="88" Canvas.Top="10">
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5"  HorizontalAlignment="Center">
+                <TextBlock Margin="0,5,0,0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="登录账号：" VerticalAlignment="Top" FontSize="13"/>
+                <TextBox x:Name="tbx_Loginport" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="171" FontFamily="Lucida Sans Unicode"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,5">
+                <TextBlock Margin="0,5,0,0" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="验证密码：" VerticalAlignment="Top" FontSize="13" Height="17" TextAlignment="Center" LineHeight="24"/>
+                <PasswordBox x:Name="pbx_Passwd" HorizontalAlignment="Left" Height="23"  VerticalAlignment="Top" Width="170" FontFamily="Lucida Sans Unicode"/>
+            </StackPanel>
+            <CheckBox x:Name="cbx_SavePasswd" IsChecked="True" Content="记住密码" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="37,0,0,0"/>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5" HorizontalAlignment="Center">
+                <Button Content="重置" HorizontalAlignment="Left" Margin="0,0,10,0" VerticalAlignment="Top" Width="75" Click="Reset_Click"/>
+                <Button Content="登录" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="75" Click="Login_Click" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel  x:Name="spl_Logined" Visibility="Hidden">
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="imgProfile" Height="50" Width="50" Margin="5" />
+               
+                <StackPanel>
+                    <TextBlock x:Name="tbk_NickName" Text="掬一捧" FontFamily="Arial Black" FontWeight="Bold" Foreground="#FF1731CF" FontSize="13" />
+                    <TextBlock x:Name="tbk_Description" Text="除了真正重要的事物，若能抛开一切该有多好！" Margin="20,5,10,0" Foreground="#FF088BAD" FontSize="11" FontFamily="Arial Unicode MS" />
+                    <StackPanel Orientation="Horizontal" Margin="3,8,0,0">
+                        <TextBlock Text="粉丝" Foreground="#FF66B1F7" FontFamily="Arial Black" />
+                        <TextBlock x:Name="tbk_FriendCount" Text="_{10}" Foreground="#FF66B1F7" Margin="0,0,10,0"/>
+                        <TextBlock Text="关注" Foreground="#FF1E80DD" FontFamily="Arial Black"/>
+                        <TextBlock x:Name="tbk_FollowersCount" Text="_{45}" Foreground="#FF1E80DD" Margin="0,0,10,0"/>
+                        <TextBlock Text="微博" Foreground="#FF5F6FEE" FontFamily="Arial Black"/>
+                        <TextBlock x:Name="tbk_StatusesCount" Text="_{99}" Foreground="#FF5F6FEE" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Content="退出登录" Height="29" Width="88" BorderThickness="0" Background="{x:Null}">
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="3" RenderingBias="Quality" ShadowDepth="3" Opacity="0.6" Color="#FF1F73E3"/>
+                    </Button.Effect>
+                </Button>
+            </StackPanel>
+            <TextBlock x:Name="tbk_Msg" Height="198"/>
+        </StackPanel>
+    </Canvas>
+</UserControl>
