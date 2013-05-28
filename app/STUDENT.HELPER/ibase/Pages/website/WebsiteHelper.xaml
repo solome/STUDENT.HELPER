@@ -8,10 +8,7 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="網址" />
-            <TextBox x:Name="tbx_Uri" MinWidth="720" Text="{Binding Path=Source,ElementName=wbs_Helper}" FontSize="9" FontFamily="Segoe UI Semilight"/>
         </StackPanel>
-        
-        
-        <WebBrowser x:Name="wbs_Helper" Source="http://www.apple.com/" MinHeight="380" />
+        <WebBrowser x:Name="wbs_Helper" Source="http://www.iliyang.cn/" MinHeight="380" />
     </StackPanel>
 </UserControl>

@@ -4,10 +4,124 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-             mc:Ignorable="d" Height="334.328" Width="568.657">
-    <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
-            <Button Content="Button" Width="75" Height="58"/>
-        </ScrollViewer>
+             xmlns:shns="clr-namespace:ibase.Utility"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="btn_Home" TargetType="{x:Type Button}">
+            <Grid >
+                <Image  x:Name="img_home" Source="../Images/home_black.png" Width="Auto" />
+                <Border>
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers >
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="img_home" Property="Source" Value="../Images/home_blue.png" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="btn_Refresh" TargetType="{x:Type Button}">
+            <Grid >
+                <Image   x:Name="img_home" Source="../Images/refresh_black.png"  />
+                <Border>
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers >
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="img_home" Property="Source" Value="../Images/refresh_blue.png" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="btn_Left" TargetType="{x:Type Button}">
+            <Grid >
+                <Image   x:Name="img_home" Source="../Images/left_black.png" Width="Auto" />
+                <Border>
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers >
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="img_home" Property="Source" Value="../Images/left_blue.png" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="btn_Right" TargetType="{x:Type Button}">
+            <Grid >
+                <Image   x:Name="img_home" Source="../Images/right_black.png" Width="Auto" AllowDrop="True" />
+                <Border>
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers >
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="img_home" Property="Source" Value="../Images/right_blue.png" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="btn_Bing" TargetType="{x:Type Button}">
+            <Grid >
+                <Image   x:Name="img_home" Source="../Images/bing_black.png" Width="Auto" AllowDrop="True" />
+                <Border>
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers >
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="img_home" Property="Source" Value="../Images/bing_cheng.png" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="btn_Google" TargetType="{x:Type Button}">
+            <Grid >
+                <Image   x:Name="img_home" Source="../Images/google_black.png" Width="Auto" AllowDrop="True" />
+                <Border>
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers >
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="img_home" Property="Source" Value="../Images/google_blue.png" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="btn_Baidu" TargetType="{x:Type Button}">
+            <Grid >
+                <Image   x:Name="img_home" Source="../Images/baidu_black.png" Width="Auto" AllowDrop="True" />
+                <Border>
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers >
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="img_home" Property="Source" Value="../Images/baidu_zi.png" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+            <Button Template="{StaticResource btn_Home}" Width="30" ToolTip="首页" Click="btn_Home_Click"/>
+            <Button Template="{StaticResource btn_Left}" Width="30" ToolTip="后退" Click="btn_Left_Click"/>
+            <Button Template="{StaticResource btn_Right}" Width="30" ToolTip="前进" Click="btn_Right_Click"/>
+
+            <TextBox x:Name="tbx_Uri" MinWidth="156" MaxWidth="768"  BorderThickness="0,0,0,0" Text="http://www.baidu.com/" FontSize="12" FontFamily="Open Sans"   />
+            <Button Template="{StaticResource btn_Refresh}" x:Name="btn_GoNext" Width="30" ToolTip="刷新" Click="btn_Refresh_Click"/>
+
+            <Button Margin="300,0,10,0"  Template="{StaticResource btn_Bing}" ToolTip="cn.bing.com" Click="btn_Bing_Click"/>
+            <Button Margin="0,0,10,0" Template="{StaticResource btn_Google}" ToolTip="www.google.com" Click="btn_Google_Clcik"/>
+         
+        </StackPanel>
+        <WebBrowser ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                    ScrollViewer.VerticalScrollBarVisibility ="Hidden"
+                    shns:WebBrowserUtility.BindableSource="{Binding Path=Text, ElementName=tbx_Uri}" 
+                    x:Name="wbs_Ie" Grid.Column="0" Grid.Row="1" />
     </Grid>
 </UserControl>

@@ -10,7 +10,7 @@
         <mui:LinkGroup DisplayName="首頁">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="home" Source="/Pages/Home.xaml" />
-                <mui:Link DisplayName="weibo" Source="/Pages/ie.xaml" />
+                <mui:Link DisplayName="weibo" Source="/Pages/weibo.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         
@@ -40,7 +40,13 @@
                 <mui:Link DisplayName="账户切换" Source="/Pages/weibo/WeiboLogin.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        
+
+        <mui:LinkGroup DisplayName="浏览器">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="主页" Source="/Pages/ie.xaml"/>
+                <mui:Link DisplayName="导航" Source="www.baidu.com"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
         <mui:LinkGroup DisplayName="设置" GroupName="settings">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="software" Source="/Pages/Settings.xaml" />

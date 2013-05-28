@@ -67,6 +67,8 @@
       <HintPath>..\iweibo\dll\NetDimension.Weibo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Activities.Core.Presentation" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,6 +97,12 @@
     <Compile Include="Pages\weibo\WeiboLogin.xaml.cs">
       <DependentUpon>WeiboLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\WebBrowserUtility.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -210,7 +218,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -232,9 +246,23 @@
   <ItemGroup>
     <Content Include="icon.ico" />
     <Content Include="icon2.ico" />
+    <Content Include="Images\baidu_black.png" />
+    <Content Include="Images\baidu_zi.png" />
+    <Content Include="Images\bing_black.png" />
+    <Content Include="Images\bing_cheng.png" />
+    <Content Include="Images\google_black.png" />
+    <Content Include="Images\google_blue.png" />
+    <Content Include="Images\home_black.png" />
+    <Content Include="Images\home_blue.png" />
     <Content Include="Images\icon.ico" />
     <Content Include="Images\icon.png" />
-    <Content Include="Images\Image.ico" />
+    <Content Include="Images\icon2.ico" />
+    <Content Include="Images\left_black.png" />
+    <Content Include="Images\left_blue.png" />
+    <Content Include="Images\refresh_black.png" />
+    <Content Include="Images\refresh_blue.png" />
+    <Content Include="Images\right_black.png" />
+    <Content Include="Images\right_blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
